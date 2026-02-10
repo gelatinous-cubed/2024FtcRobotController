@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /*
  * This OpMode ramps a single motor speed up and down repeatedly until Stop is pressed.
@@ -47,14 +48,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 @TeleOp(name = "Concept: Motor Test", group = "Concept")
 public class MotorTest extends LinearOpMode {
-
     static final double INCREMENT   = 0.01;     // amount to ramp motor each CYCLE_MS cycle
     static final int    CYCLE_MS    =   50;     // period of each cycle
-    static final double MAX_FWD     =  1.0;     // Maximum FWD power applied to motor
+    static final double MAX_FWD     =  5.0;     // Maximum FWD power applied to motor
 
-    // Define class members
+    // Define class
     DcMotor motor;
-    double  power   = 0;
+    double  power   = 10;
 
 
     @Override
@@ -62,20 +62,23 @@ public class MotorTest extends LinearOpMode {
 
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
-        motor = hardwareMap.get(DcMotor.class, "left_front_drive");
+        motor = hardwareMap.get(DcMotor.class, "shoulder_left");
 
+        motor.setDirection(DcMotorSimple.Direction.FORWARD);
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
         telemetry.update();
         waitForStart();
 
+        motor.setPower(power);
+
         // Ramp motor speeds till stop pressed.
         while(opModeIsActive()) {
             // Keep stepping up until we hit the max value.
-            power += INCREMENT ;
-            if (power >= MAX_FWD ) {
-                power = MAX_FWD;
-            }
+//            power += INCREMENT ;
+//            if (power >= MAX_FWD ) {
+//                power = MAX_FWD;
+//            }
 
 
             // Display the current value
@@ -84,9 +87,9 @@ public class MotorTest extends LinearOpMode {
             telemetry.update();
 
             // Set the motor to the new power and pause;
-            motor.setPower(power);
-            sleep(CYCLE_MS);
-            idle();
+//            motor.setPower(power);
+//            sleep(CYCLE_MS);
+//            idle();
         }
 
         // Turn off motor and signal done;
