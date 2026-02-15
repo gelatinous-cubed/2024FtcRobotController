@@ -54,7 +54,7 @@ public class MotorTest extends LinearOpMode {
 
     // Define class
     DcMotor motor;
-    double  power   = 10;
+    double  power   = 1;
 
 
     @Override
@@ -62,7 +62,7 @@ public class MotorTest extends LinearOpMode {
 
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
-        motor = hardwareMap.get(DcMotor.class, "shoulder_left");
+        motor = hardwareMap.get(DcMotor.class, "back_right_drive");
 
         motor.setDirection(DcMotorSimple.Direction.FORWARD);
         // Wait for the start button
