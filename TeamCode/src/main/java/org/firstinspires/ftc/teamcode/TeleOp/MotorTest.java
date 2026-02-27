@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /*
  * This OpMode ramps a single motor speed up and down repeatedly until Stop is pressed.
@@ -51,10 +52,14 @@ public class MotorTest extends LinearOpMode {
     static final double INCREMENT   = 0.01;     // amount to ramp motor each CYCLE_MS cycle
     static final int    CYCLE_MS    =   50;     // period of each cycle
     static final double MAX_FWD     =  5.0;     // Maximum FWD power applied to motor
+    static final double MIN_POS     =  0.5;     // Minimum rotational position
 
     // Define class
     DcMotor motor;
-    double  power   = 1;
+    Servo servo;
+
+    double position = MIN_POS;
+    double  power   = 0.87;
 
 
     @Override
@@ -63,24 +68,31 @@ public class MotorTest extends LinearOpMode {
         // Connect to motor (Assume standard left wheel)
         // Change the text in quotes to match any motor name on your robot.
         motor = hardwareMap.get(DcMotor.class, "back_right_drive");
+        servo = hardwareMap.get(Servo.class, "servo_claw");
+
 
         motor.setDirection(DcMotorSimple.Direction.FORWARD);
         // Wait for the start button
-        telemetry.addData(">", "Press Start to run Motors." );
+        telemetry.addData(">", "Press Start to run Motor & Servo!" );
         telemetry.update();
+        servo.setPosition(MIN_POS);
         waitForStart();
 
         motor.setPower(power);
+        sleep(2000);
 
         // Ramp motor speeds till stop pressed.
         while(opModeIsActive()) {
+            telemetry.addData("servoPosition", "%5.2f", servo.getPosition());
+            servo.setPosition(1);
+           sleep(600);
+            servo.setPosition(MIN_POS);
+            sleep(850);
             // Keep stepping up until we hit the max value.
 //            power += INCREMENT ;
 //            if (power >= MAX_FWD ) {
 //                power = MAX_FWD;
 //            }
-
-
             // Display the current value
             telemetry.addData("Motor Power", "%5.2f", power);
             telemetry.addData(">", "Press Stop to end test." );

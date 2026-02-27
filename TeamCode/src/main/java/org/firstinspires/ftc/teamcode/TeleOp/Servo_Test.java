@@ -38,22 +38,31 @@ public class Servo_Test extends LinearOpMode {
         // Wait for the start button
         telemetry.addData(">", "Press Start to scan Servo." );
         telemetry.update();
+        servo.setPosition(MIN_POS);
         waitForStart();
+        telemetry.addData("IsActive", opModeIsActive());
+
 
 
         // Scan servo till stop pressed.
         while(opModeIsActive()){
-            position = gamepad2.right_trigger >MIN_POS?gamepad2.right_trigger:MIN_POS;
+            servo.setPosition(1);
+            telemetry.addData("IsActive", opModeIsActive());
 
             // Display the current value
             telemetry.addData("Servo Position", "%5.2f", position);
             telemetry.addData(">", "Press Stop to end test." );
             telemetry.update();
 
+            sleep(1000);
+
+            servo.setPosition(MIN_POS);
+
+            sleep(1000);
             // Set the servo to the new position and pause;
-            servo.setPosition(position);
-            idle();
+            // sidle();
         }
+        telemetry.addData("IsActive", opModeIsActive());
 
         // Signal done;
         telemetry.addData(">", "Done");
