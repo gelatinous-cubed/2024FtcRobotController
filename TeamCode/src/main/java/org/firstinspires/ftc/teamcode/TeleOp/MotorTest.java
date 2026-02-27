@@ -64,7 +64,7 @@ public class MotorTest extends LinearOpMode {
         // Change the text in quotes to match any motor name on your robot.
         motor = hardwareMap.get(DcMotor.class, "back_right_drive");
 
-        motor.setDirection(DcMotorSimple.Direction.REVERSE);
+        motor.setDirection(DcMotorSimple.Direction.FORWARD);
         // Wait for the start button
         telemetry.addData(">", "Press Start to run Motors." );
         telemetry.update();
